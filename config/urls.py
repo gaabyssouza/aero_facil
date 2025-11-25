@@ -27,11 +27,10 @@ urlpatterns = [
 ]
 
 if settings.DEBUG: [
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0]
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
     path('admin/', admin.site.urls),
     path('', include('app.urls')),  # rota principal
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
