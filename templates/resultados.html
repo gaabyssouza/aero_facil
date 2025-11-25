@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados - Aero Fácil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="{% url 'index' %}">
+                <img src="{% static 'logo.png' %}" alt="Logo" style="height: 40px;"> Aero Fácil
+            </a>
+        </div>
+    </nav>
+
+    <main class="container my-5">
+        <div class="text-center mb-5">
+            <h2>Voos Encontrados</h2>
+            <p class="lead text-muted">Exibindo opções disponíveis</p>
+        </div>
+
+        <div class="card shadow-sm mb-4 card-hover">
+            <div class="card-body p-4">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h5 class="text-primary fw-bold">Embraer Phenom 300</h5>
+                        <p class="mb-1"><strong>Proprietário:</strong> Carlos Andrade</p>
+                        <p class="text-muted small">Jato leve, ágil e confortável.</p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <p class="fs-5 mb-2"><strong>8 assentos</strong> livres</p>
+                        <a href="{% url 'selecionar_assento' %}" class="btn btn-warning text-white fw-bold">Ver assentos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
