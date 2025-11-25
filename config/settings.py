@@ -37,7 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD:aero_facil/settings.py
     "core",
+=======
+    'app',
+    'crispy_forms',
+    'crispy_bootstrap5',
+    'django_extensions',
+>>>>>>> ebe07c42394dbd8e6ae65bef6ac3c7c68e7a8509:config/settings.py
 ]
 
 MIDDLEWARE = [
@@ -50,12 +57,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'aero_facil.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -67,7 +74,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'aero_facil.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database
