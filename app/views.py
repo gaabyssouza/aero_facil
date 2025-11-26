@@ -6,6 +6,7 @@ from django.views.decorators.http import require_http_methods
 def index(request):
     return render(request, 'index.html')
 
+
 @require_http_methods(["GET"])
 def resultados(request):
     origem = request.GET.get('origem')
@@ -31,5 +32,5 @@ def login_view(request):
     return render(request, 'index.html', {'login_error': 'Credenciais inválidas'})
 
 @login_required
-def dashboard(request):
-    return render(request, 'dashboard.html')
+def selecionar_assento(request):
+    return render(request, 'assento.html')
