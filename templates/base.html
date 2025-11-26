@@ -1,0 +1,216 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aero Fácil</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="font-family: 'Poppins', sans-serif;">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark position-absolute w-100">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">
+        <img src="img/logo.png" alt="Aero Fácil" class="logo-img me-2" style="height:60px; margin-right:20px; "/>
+        
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
+              <i class="bi bi-person-circle"></i> Login do Proprietário
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header com formulário -->
+  <header class="hero d-flex flex-column justify-content-center" style="padding-top:100px; padding-bottom:50px;">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="p-4 border rounded shadow bg-light">
+            <h2 class="text-center text-primary mb-4">Encontre sua próxima viagem</h2>
+
+            <!-- FORMULÁRIO CORRIGIDO -->
+            <form id="search-form" action="resultados.html">
+
+              <!-- ORIGEM -->
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="estado-origem" class="form-label">Estado de Origem</label>
+                  <select id="estado-origem" class="form-select">
+                    <option value="">Selecione o estado de origem</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="cidade-origem" class="form-label">Cidade de Origem</label>
+                  <select id="cidade-origem" class="form-select" disabled>
+                    <option value="">Selecione a cidade de origem</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- DESTINO -->
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="estado-destino" class="form-label">Estado de Destino</label>
+                  <select id="estado-destino" class="form-select">
+                    <option value="">Selecione o estado de destino</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="cidade-destino" class="form-label">Cidade de Destino</label>
+                  <select id="cidade-destino" class="form-select" disabled>
+                    <option value="">Selecione a cidade de destino</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- DATAS E PASSAGEIROS -->
+              <div class="row mb-3">
+                <div class="col-md-4">
+                  <label for="data-ida" class="form-label">Data de Ida</label>
+                  <input type="date" id="data-ida" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                  <label for="data-volta" class="form-label">Data de Volta</label>
+                  <input type="date" id="data-volta" class="form-control">
+                </div>
+                <div class="col-md-4">
+                  <label for="passageiros" class="form-label">Número de Passageiros</label>
+                  <input type="number" id="passageiros" class="form-control" min="1" value="1" required>
+                </div>
+              </div>
+
+              <!-- BOTÃO -->
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary px-4">Buscar Voos</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="container my-5">
+    <h2 class="text-center">Bem-vindo ao Aero Fácil!</h2>
+    <p class="text-center lead text-muted">A plataforma que conecta proprietários de jatos particulares a passageiros.</p>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-light text-center py-3 mt-auto">
+    <div class="container">
+      <p class="text-muted mb-0">© 2025 Aero Fácil</p>
+    </div>
+  </footer>
+
+  <!-- Modal de Login -->
+  <div class="modal fade" id="loginModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Login do Proprietário</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="login-form">
+            <div class="mb-3">
+              <label for="login-nome" class="form-label">Nome</label>
+              <input type="text" class="form-control" id="login-nome" placeholder="Seu nome completo" required>
+            </div>
+            <div class="mb-3">
+              <label for="login-email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="login-email" required>
+            </div>
+            <div class="mb-3">
+              <label for="login-senha" class="form-label">Senha</label>
+              <input type="password" class="form-control" id="login-senha" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Entrar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Scripts personalizados -->
+  <script>
+    // LOGIN
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const nomeUsuario = document.getElementById('login-nome').value;
+      localStorage.setItem('usuarioLogado', nomeUsuario);
+      window.location.href = 'dashboard.html';
+    });
+
+    // SALVAR NÚMERO DE PASSAGEIROS
+    document.getElementById('search-form').addEventListener('submit', function() {
+      const numeroPassageiros = document.getElementById('passageiros').value;
+      localStorage.setItem('passageirosSelecionados', numeroPassageiros);
+    });
+
+    // LISTA DE ESTADOS E CIDADES
+    const cidadesPorEstado = {
+      "SP": ["São Paulo", "Campinas", "Santos", "Ribeirão Preto", "Sorocaba"],
+      "RJ": ["Rio de Janeiro", "Niterói", "Petrópolis", "Campos dos Goytacazes"],
+      "MG": ["Belo Horizonte", "Uberlândia", "Juiz de Fora", "Montes Claros"],
+      "RN": ["Natal", "Mossoró", "Caicó", "Currais Novos"],
+      "BA": ["Salvador", "Feira de Santana", "Vitória da Conquista", "Ilhéus"]
+    };
+
+    // Função para preencher os estados
+    function preencherEstados(selectId) {
+      const select = document.getElementById(selectId);
+      Object.keys(cidadesPorEstado).forEach(sigla => {
+        const option = document.createElement("option");
+        option.value = sigla;
+        option.textContent = sigla;
+        select.appendChild(option);
+      });
+    }
+
+    // Função para atualizar as cidades
+    function atualizarCidades(estadoSelectId, cidadeSelectId) {
+      const estadoSelect = document.getElementById(estadoSelectId);
+      const cidadeSelect = document.getElementById(cidadeSelectId);
+
+      estadoSelect.addEventListener("change", function() {
+        cidadeSelect.innerHTML = "<option value=''>Selecione uma cidade</option>";
+        const estadoSelecionado = this.value;
+
+        if (estadoSelecionado && cidadesPorEstado[estadoSelecionado]) {
+          cidadesPorEstado[estadoSelecionado].forEach(cidade => {
+            const option = document.createElement("option");
+            option.value = cidade;
+            option.textContent = cidade;
+            cidadeSelect.appendChild(option);
+          });
+          cidadeSelect.disabled = false;
+        } else {
+          cidadeSelect.disabled = true;
+        }
+      });
+    }
+
+    // Inicializa os selects
+    preencherEstados("estado-origem");
+    preencherEstados("estado-destino");
+    atualizarCidades("estado-origem", "cidade-origem");
+    atualizarCidades("estado-destino", "cidade-destino");
+  </script>
+</body>
+</html>
