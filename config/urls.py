@@ -20,10 +20,15 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from app.views import login_view, selecionar_assento
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('app.urls')),  # rota principal
+    path('', include('aero_facil.urls')),  # rota principal
+    path('login/', login_view, name='login'),# rotas de autenticação
+    path('selecionar_assento/', selecionar_assento, name='selecionar_assento'),
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

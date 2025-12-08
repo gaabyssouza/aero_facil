@@ -1,4 +1,4 @@
-from django.db import models
+
 
 # Create your models here.
 # Importações necessárias do Django
@@ -125,3 +125,5 @@ class Review(models.Model):
 
     def __str__(self):
         return f"Avaliação de {self.reviewer.username} para a viagem {self.trip.id} - Nota: {self.rating}"
+
+

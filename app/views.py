@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 
+from app.forms import LoginForm
+
 def index(request):
     return render(request, 'index.html')
 
@@ -21,16 +23,27 @@ def resultados(request):
 
 @require_http_methods(["POST"])
 def login_view(request):
-    # se seu username não for email, ajuste abaixo
+    # Se for GET: mostra página de login
+    if request.method == 'GET':
+        return render(request, 'accounts/login.html')
+
+    # Se for POST: processa login
     email = request.POST.get('email')
     senha = request.POST.get('senha')
+
     user = authenticate(request, username=email, password=senha)
+
     if user is not None:
         auth_login(request, user)
         return redirect('dashboard')
-    # fallback: retornar index com erro
-    return render(request, 'index.html', {'login_error': 'Credenciais inválidas'})
+
+    # Caso inválido
+    return render(request, 'accounts/login.html', {'login_error': 'Credenciais inválidas'})
 
 @login_required
 def selecionar_assento(request):
-    return render(request, 'assento.html')
+    return render(request, 'selecionar_assento.html')
+
+class LoginCustomView(login_view):
+    tempate_name = 'accounts/login.html'
+    authentication_form = LoginForm
