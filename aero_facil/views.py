@@ -21,11 +21,11 @@ def resultados(request):
     }
     return render(request, 'resultados.html', context)
 
-@require_http_methods(["POST"])
+@require_http_methods(["GET","POST"])
 def login_view(request):
     # Se for GET: mostra página de login
     if request.method == 'GET':
-        return render(request, 'accounts/login.html')
+        return render(request, 'login.html')
 
     # Se for POST: processa login
     email = request.POST.get('email')
@@ -35,13 +35,18 @@ def login_view(request):
 
     if user is not None:
         auth_login(request, user)
-        return redirect('dashboard')
+        return redirect('painel')
 
     # Caso inválido
-    return render(request, 'accounts/login.html', {'login_error': 'Credenciais inválidas'})
+    return render(request, 'login.html', {'login_error': 'Credenciais inválidas'})
 
 @login_required
 def selecionar_assento(request):
     return render(request, 'selecionar_assento.html')
+
+
+@login_required
+def painel(request):
+    return render(request,'painel.html')
 
 
