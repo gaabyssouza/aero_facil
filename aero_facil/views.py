@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 
-from app.forms import LoginForm
+from aero_facil.forms import LoginForm
 
 def index(request):
     return render(request, 'index.html')
@@ -44,6 +44,4 @@ def login_view(request):
 def selecionar_assento(request):
     return render(request, 'selecionar_assento.html')
 
-class LoginCustomView(login_view):
-    tempate_name = 'accounts/login.html'
-    authentication_form = LoginForm
+
