@@ -3,15 +3,16 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard - Aero Fácil</title>
+    <title>Painel - Aero Fácil</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-    <nav class="navbar navbar-light bg-light shadow-sm">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100">
         <div class="container">
             <a class="navbar-brand fw-bold" href="{% url 'index' %}">
-                <img src="{% static 'logo.png' %}" style="height: 40px;"> Aero Fácil
+                <img src="{% static 'img/logo.png' %}" alt="Aero Fácil" class="logo-img me-2" style="height:100px; margin-right:20px;"/>
             </a>
             <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">Sair</a>
         </div>
@@ -21,17 +22,26 @@
         <h2>Minha Frota</h2>
         <p>Gerencie suas aeronaves cadastradas.</p>
 
+        <!-- Formulário de cadastro -->
         <div class="card p-4 mb-4">
             <h5>Cadastrar Nova Aeronave</h5>
-            <form id="form-aeronave">
-                <div class="row">
-                    <div class="col-md-4"><input type="text" class="form-control" placeholder="Modelo" required></div>
-                    <div class="col-md-4"><input type="text" class="form-control" placeholder="Prefixo" required></div>
-                    <div class="col-md-4"><button type="submit" class="btn btn-success w-100">Adicionar</button></div>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <input type="text" name="modelo" class="form-control" placeholder="Modelo" required>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="prefixo" class="form-control" placeholder="Prefixo" required>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-success w-100">Adicionar</button>
+                    </div>
                 </div>
             </form>
         </div>
 
+        <!-- Tabela de aeronaves -->
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -40,12 +50,18 @@
                     <th>Status</th>
                 </tr>
             </thead>
-            <tbody id="tabela-aeronaves">
-                <tr>
-                    <td>Embraer Phenom 300</td>
-                    <td>PT-XAZ</td>
-                    <td><span class="badge bg-success">Disponível</span></td>
-                </tr>
+            <tbody>
+                {% for aero in aeronaves %}
+                    <tr>
+                        <td>{{ aero.model_name }}</td>
+                        <td>{{ aero.prefixo }}</td>
+                        <td><span class="badge bg-success">Disponível</span></td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center text-muted">Nenhuma aeronave cadastrada ainda.</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

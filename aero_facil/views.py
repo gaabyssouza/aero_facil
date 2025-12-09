@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, login as auth_login
 
-from aero_facil.forms import LoginForm
-aeronaves = []
+from .models import Aircraft  # Import do modelo Aircraft
+
 
 def index(request):
     return render(request, 'index.html')
@@ -22,24 +23,20 @@ def resultados(request):
     }
     return render(request, 'resultados.html', context)
 
-@require_http_methods(["GET","POST"])
+
+@require_http_methods(["GET", "POST"])
 def login_view(request):
-    # Se for GET: mostra página de login
-    if request.method == 'GET':
-        return render(request, 'login.html')
+    form = AuthenticationForm()
 
-    # Se for POST: processa login
-    email = request.POST.get('email')
-    senha = request.POST.get('senha')
+    if request.method == "POST":
+        form = AuthenticationForm(data=request.POST)
 
-    user = authenticate(request, username=email, password=senha)
+        if form.is_valid():
+            usuario = form.get_user()
+            auth_login(request, usuario)
+            return redirect("painel")
 
-    if user is not None:
-        auth_login(request, user)
-        return redirect('painel')
-
-    # Caso inválido
-    return render(request, 'login.html', {'login_error': 'Credenciais inválidas'})
+    return render(request, "login.html", {"form": form})
 
 
 def selecionar_assento(request):
@@ -48,22 +45,21 @@ def selecionar_assento(request):
 
 @login_required
 def painel(request):
-    global aeronaves
+    if request.method == "POST":
+        model_name = request.POST.get("modelo")
+        prefixo = request.POST.get("prefixo")
 
-    if request.method == 'POST':
-        modelo = request.POST.get('modelo')
-        prefixo = request.POST.get('prefixo')
+        # Cria nova aeronave do usuário logado
+        Aircraft.objects.create(
+            owner=request.user,
+            model_name=model_name,
+            prefixo=prefixo,
+            capacity=4  # valor padrão
+        )
 
-        aeronaves.append({
-            'modelo': modelo,
-            'prefixo': prefixo,
-            'usuario': request.user.username  # salva o dono
-        })
+        return redirect("painel")
 
-        return redirect('painel')
+    # Busca aeronaves do usuário logado
+    aeronaves_usuario = Aircraft.objects.filter(owner=request.user)
 
-    # Filtra somente as aeronaves do usuário logado
-    aeronaves_usuario = [a for a in aeronaves if a['usuario'] == request.user.username]
-
-    return render(request, 'painel.html', {'aeronaves': aeronaves_usuario})
-
+    return render(request, "painel.html", {"aeronaves": aeronaves_usuario})

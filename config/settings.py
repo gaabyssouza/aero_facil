@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_extensions',
 ]
 
+AUTH_USER_MODEL = 'aero_facil.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -143,6 +144,6 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 # URL de login para usuários não autenticados
-LOGIN_URL = 'login'  # Nome da URL definida no urls.py
-LOGIN_REDIRECT_URL = 'painel'  # Opcional: para onde o usuário vai após login
+LOGIN_URL = '/login/'  # Nome da URL definida no urls.py
+LOGIN_REDIRECT_URL = '/painel/'  # Opcional: para onde o usuário vai após login
 

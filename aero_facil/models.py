@@ -1,10 +1,9 @@
-
-
 # Create your models here.
 # Importações necessárias do Django
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
+
 
 # --- 1. MODELO DE USUÁRIO ---
 # Estendemos o usuário padrão do Django para adicionar campos específicos.
@@ -23,21 +22,14 @@ class User(AbstractUser):
 # --- 2. MODELO DE AERONAVE ---
 # Armazena os detalhes das aeronaves que um dono possui.
 class Aircraft(models.Model):
-    """
-    Representa uma aeronave pertencente a um usuário dono.
-    """
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='aircrafts', verbose_name="Proprietário")
     model_name = models.CharField(max_length=100, verbose_name="Modelo da Aeronave")
+    prefixo = models.CharField(max_length=10, verbose_name="Prefixo da Aeronave")  # NOVO CAMPO
     capacity = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(20)], verbose_name="Capacidade de Passageiros")
     photo = models.ImageField(upload_to='aircraft_pics/', null=True, blank=True, verbose_name="Foto da Aeronave")
 
-    class Meta:
-        verbose_name = "Aeronave"
-        verbose_name_plural = "Aeronaves"
-
     def __str__(self):
-        return f"{self.model_name} ({self.owner.username})"
-
+        return f"{self.model_name} ({self.prefixo}) - {self.owner.username}"
 # --- 3. MODELO DE VIAGEM (A "CARONA") ---
 # O registro principal do sistema, representando a oferta de uma viagem.
 class Trip(models.Model):
@@ -128,3 +120,24 @@ class Review(models.Model):
         return f"Avaliação de {self.reviewer.username} para a viagem {self.trip.id} - Nota: {self.rating}"
 
 
+
+def painel(request):
+    from .models import Aircraft
+
+    if request.method == "POST":
+        model_name = request.POST.get("modelo")
+        prefixo = request.POST.get("prefixo")
+
+        Aircraft.objects.create(
+            owner=request.user,
+            model_name=model_name,
+            capacity=4,   # coloque algo padrão
+        )
+
+        return redirect("painel")
+
+    aeronaves_usuario = Aircraft.objects.filter(owner=request.user)
+
+    return render(request, "painel.html", {
+        "aeronaves": aeronaves_usuario
+    })

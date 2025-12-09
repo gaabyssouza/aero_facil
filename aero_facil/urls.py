@@ -10,6 +10,8 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('selecionar_assento/', views.selecionar_assento, name='selecionar_assento'),
     path('painel/', views.painel, name='painel'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+
 ]
 
 if settings.DEBUG:

@@ -26,6 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('aero_facil.urls')),  # rota principal
     path('logout/', logoutView.as_view(next_page='/login/'), name='logout'),
+    
 ]
 
 
