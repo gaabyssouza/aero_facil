@@ -7,32 +7,87 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
-        .seat { width: 40px; height: 40px; border-radius: 8px; cursor: pointer; background: #ddd; margin: 5px; display: inline-block;}
-        .seat.selected { background-color: #28a745; color: white; }
-        .seat.occupied { background-color: #dc3545; cursor: not-allowed; opacity: 0.6; }
+        body {
+            background-color: #f7f7f7;
+        }
+
+        .seat { 
+            width: 45px;
+            height: 45px; 
+            border-radius: 8px; 
+            cursor: pointer;
+            background: #ddd; 
+            margin: 5px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .seat.selected { 
+            background-color: #28a745; 
+            color: white; 
+        }
+
+        .seat.occupied { 
+            background-color: #dc3545; 
+            cursor: not-allowed; 
+            opacity: 0.6; 
+            color: white;
+        }
+
+        .seat-card {
+            max-width: 400px; 
+            margin: auto;
+        }
+
+        nav img {
+            height: 70px;
+        }
+
     </style>
 </head>
+
 <body>
-    <nav class="navbar navbar-light bg-light shadow-sm">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm">
         <div class="container">
             <a class="navbar-brand fw-bold" href="{% url 'index' %}">
-                <img src="{% static 'logo.png' %}" style="height: 40px;"> Aero Fácil
+                <img src="{% static 'img/logo.png' %}" alt="Aero Fácil">
             </a>
         </div>
     </nav>
 
-    <div class="container my-5 text-center">
-        <h2>Escolha seu Assento</h2>
-        <p>Embraer Phenom 300</p>
-        
-        <div class="d-flex justify-content-center flex-wrap" style="max-width: 300px; margin: 0 auto;">
-            <div class="seat" onclick="toggleSeat(this)">1A</div>
-            <div class="seat" onclick="toggleSeat(this)">1B</div>
-            <div class="w-100"></div> <div class="seat" onclick="toggleSeat(this)">2A</div>
-            <div class="seat occupied">2B</div> </div>
 
-        <button class="btn btn-primary mt-4 px-5" onclick="finalizar()">Confirmar Reserva</button>
+    <!-- Conteúdo -->
+    <div class="container" style="margin-top: 120px;"> <!-- espaço para não ficar atrás da navbar-->
+
+        <div class="card shadow seat-card">
+            <div class="card-body text-center">
+
+                <h3 class="mb-2">Escolha Seu Assento</h3>
+                <small class="text-muted d-block mb-4">Embraer Phenom 300</small>
+
+                <div class="d-flex justify-content-center flex-wrap" style="max-width: 250px; margin: 0 auto;">
+
+                    <div class="seat" onclick="toggleSeat(this)">1A</div>
+                    <div class="seat" onclick="toggleSeat(this)">1B</div>
+
+                    <div class="w-100"></div>
+
+                    <div class="seat" onclick="toggleSeat(this)">2A</div>
+                    <div class="seat occupied">2B</div>
+
+                </div>
+
+                <button class="btn btn-primary mt-4 w-100" onclick="finalizar()">Confirmar Reserva</button>
+
+            </div>
+        </div>
+
     </div>
+
 
     <script>
         function toggleSeat(element) {
@@ -40,10 +95,18 @@
                 element.classList.toggle('selected');
             }
         }
+
         function finalizar() {
-            alert("Reserva Solicitada!");
-            window.location.href = "{% url 'dashboard' %}"; // Vai para o dashboard
+            const selecionado = document.querySelector('.seat.selected');
+
+            if (!selecionado) {
+                alert("Por favor, selecione um assento antes de confirmar.");
+                return;
+            }
+
+            alert("Reserva realizada para o assento " + selecionado.innerText + "!");
         }
     </script>
+
 </body>
 </html>

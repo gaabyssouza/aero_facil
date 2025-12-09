@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 
 from aero_facil.forms import LoginForm
+aeronaves = []
 
 def index(request):
     return render(request, 'index.html')
@@ -40,13 +41,29 @@ def login_view(request):
     # Caso inválido
     return render(request, 'login.html', {'login_error': 'Credenciais inválidas'})
 
-@login_required
+
 def selecionar_assento(request):
-    return render(request, 'selecionar_assento.html')
+    return render(request, 'assento.html')
 
 
 @login_required
 def painel(request):
-    return render(request,'painel.html')
+    global aeronaves
 
+    if request.method == 'POST':
+        modelo = request.POST.get('modelo')
+        prefixo = request.POST.get('prefixo')
+
+        aeronaves.append({
+            'modelo': modelo,
+            'prefixo': prefixo,
+            'usuario': request.user.username  # salva o dono
+        })
+
+        return redirect('painel')
+
+    # Filtra somente as aeronaves do usuário logado
+    aeronaves_usuario = [a for a in aeronaves if a['usuario'] == request.user.username]
+
+    return render(request, 'painel.html', {'aeronaves': aeronaves_usuario})
 

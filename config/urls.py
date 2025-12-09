@@ -20,13 +20,12 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from aero_facil.views import login_view, selecionar_assento
+from aero_facil.views import logoutView, selecionar_assento
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('aero_facil.urls')),  # rota principal
-    path('login/', login_view, name='login'),# rotas de autenticação
-    path('selecionar_assento/', selecionar_assento, name='selecionar_assento'),
+    path('logout/', logoutView.as_view(next_page='/login/'), name='logout'),
 ]
 
 
